@@ -24,6 +24,7 @@ namespace Assignment2_S19
             Console.WriteLine("\n\nBalanced sums");
             List<int> arr = new List<int> { 1, 2, 3 };
             Console.WriteLine(balancedSums(arr));
+            Console.ReadLine();
 
             // Missing numbers
             Console.WriteLine("\n\nMissing numbers");
@@ -79,6 +80,40 @@ namespace Assignment2_S19
         // Complete the balancedSums function below.
         static string balancedSums(List<int> arr)
         {
+            try
+            {
+                int[] arr1 = arr.ToArray();
+                bool balance_check = false;
+                for (int i = 0; i < arr1.Length; i++)
+                {
+                    int sum_l = 0;
+                    int sum_r = 0;
+                    for(int j=0; j<i;j++)
+                    {
+                        sum_l += arr1[j];
+                    }
+                    for(int k=i+1;k<arr1.Length;k++)
+                    {
+                        sum_r += arr1[k];
+                    }
+                    if(sum_l==sum_r)
+                    {
+                        balance_check = true;
+                    }
+                }
+                if(balance_check==true)
+                {
+                    return "YES";
+                }
+                else
+                {
+                    return "NO";
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Exception Occured!");
+            }
             return "";
         }
 
