@@ -197,15 +197,62 @@ namespace Assignment2_S19
         }
 
         // Complete the missingNumbers function below.
-        static int[] missingNumbers(int[] arr, int[] brr)
+        static int[] missingNumbers(int[] arr)
         {
-            return new int[] { };
+            
         }
 
 
         // Complete the gradingStudents function below.
         static int[] gradingStudents(int[] grades)
         {
+            try
+            {
+                int[] brr = new int[grades.Length];
+                bool cont = true;
+                for (int k = 0; k < brr.Length; k++)
+                {
+                    if (grades[k] < 0 || arr[k] > 100)
+                    {
+                        cont = false;
+                    }
+                }
+                if (cont == true)
+                {
+                    for (int i = 0; i < grades.Length; i++)
+                    {
+                        if (grades[i] > 37)
+                        {
+                            int quo = grades[i] / 5;
+                            int high_num = (quo + 1) * 5;
+                            if (high_num - grades[i] < 3)
+                            {
+                                brr[i] = high_num;
+                            }
+                            else
+                            {
+                                brr[i] = grades[i];
+                            }
+                        }
+                        else
+                        {
+                            brr[i] = arr[i];
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                return brr;
+
+            }
+
+            catch
+            {
+                Console.WriteLine("Grades have to be between(and including) 0 and 100");
+            }
             return new int[] { };
         }
 
