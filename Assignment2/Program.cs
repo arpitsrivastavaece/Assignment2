@@ -81,8 +81,9 @@ namespace Assignment2_S19
 
             // find the median
             Console.WriteLine("\n\nFind the median");
-            int[] arr2 = { 0, 1, 2, 4, 6, 5, 3 };
-            Console.WriteLine(findMedian(arr2));
+            int[] a = new int[10];
+            median(a);
+            Console.ReadKey();
 
             // closest numbers
             Console.WriteLine("\n\nClosest numbers");
@@ -148,12 +149,12 @@ namespace Assignment2_S19
             }
             a[i] = temp;
         }//rotate left
-    
 
 
 
-// Complete the maximumToys function below.
-int maximumToys(int[] toys, int budget)
+
+        // Complete the maximumToys function below.
+        int maximumToys(int[] toys, int budget)
         {
             //Sorting the prices array in ascending order using Bubble sort
             int maxToys = 0;
@@ -197,112 +198,149 @@ int maximumToys(int[] toys, int budget)
 
     // Complete the balancedSums function below.
     static string balancedSums(List<int> arr)
+    {
+        try
         {
-            try
+            int[] arr1 = arr.ToArray();
+            bool balance_check = false;
+            for (int i = 0; i < arr1.Length; i++)
             {
-                int[] arr1 = arr.ToArray();
-                bool balance_check = false;
-                for (int i = 0; i < arr1.Length; i++)
+                int sum_l = 0;
+                int sum_r = 0;
+                for (int j = 0; j < i; j++)
                 {
-                    int sum_l = 0;
-                    int sum_r = 0;
-                    for(int j=0; j<i;j++)
-                    {
-                        sum_l += arr1[j];
-                    }
-                    for(int k=i+1;k<arr1.Length;k++)
-                    {
-                        sum_r += arr1[k];
-                    }
-                    if(sum_l==sum_r)
-                    {
-                        balance_check = true;
-                    }
+                    sum_l += arr1[j];
                 }
-                if(balance_check==true)
+                for (int k = i + 1; k < arr1.Length; k++)
                 {
-                    return "YES";
+                    sum_r += arr1[k];
                 }
-                else
+                if (sum_l == sum_r)
                 {
-                    return "NO";
+                    balance_check = true;
                 }
             }
-            catch
+            if (balance_check == true)
             {
-                Console.WriteLine("Exception Occured!");
+                return "YES";
             }
-            return "";
-        }
-
-        // Complete the missingNumbers function below.
-        static int[] missingNumbers(int[] arr)
-        {
-            
-        }
-
-
-        // Complete the gradingStudents function below.
-        static int[] gradingStudents(int[] grades)
-        {
-            try
+            else
             {
-                int[] brr = new int[grades.Length];
-                bool cont = true;
-                for (int k = 0; k < brr.Length; k++)
+                return "NO";
+            }
+        }
+        catch
+        {
+            Console.WriteLine("Exception Occured!");
+        }
+        return "";
+    }
+
+    // Complete the missingNumbers function below.
+    static int[] missingNumbers(int[] arr)
+    {
+
+    }
+
+
+    // Complete the gradingStudents function below.
+    static int[] gradingStudents(int[] grades)
+    {
+        try
+        {
+            int[] brr = new int[grades.Length];
+            bool cont = true;
+            for (int k = 0; k < brr.Length; k++)
+            {
+                if (grades[k] < 0 || arr[k] > 100)
                 {
-                    if (grades[k] < 0 || arr[k] > 100)
-                    {
-                        cont = false;
-                    }
+                    cont = false;
                 }
-                if (cont == true)
+            }
+            if (cont == true)
+            {
+                for (int i = 0; i < grades.Length; i++)
                 {
-                    for (int i = 0; i < grades.Length; i++)
+                    if (grades[i] > 37)
                     {
-                        if (grades[i] > 37)
+                        int quo = grades[i] / 5;
+                        int high_num = (quo + 1) * 5;
+                        if (high_num - grades[i] < 3)
                         {
-                            int quo = grades[i] / 5;
-                            int high_num = (quo + 1) * 5;
-                            if (high_num - grades[i] < 3)
-                            {
-                                brr[i] = high_num;
-                            }
-                            else
-                            {
-                                brr[i] = grades[i];
-                            }
+                            brr[i] = high_num;
                         }
                         else
                         {
-                            brr[i] = arr[i];
+                            brr[i] = grades[i];
                         }
                     }
+                    else
+                    {
+                        brr[i] = arr[i];
+                    }
                 }
-                else
-                {
-                    throw new Exception();
-                }
-
-                return brr;
-
             }
-
-            catch
+            else
             {
-                Console.WriteLine("Grades have to be between(and including) 0 and 100");
+                throw new Exception();
             }
-            return new int[] { };
+
+            return brr;
+
         }
 
-        // Complete the findMedian function below.
-        static int findMedian(int[] arr)
+        catch
         {
-            return 0;
+            Console.WriteLine("Grades have to be between(and including) 0 and 100");
         }
+        return new int[] { };
+    }
 
-        // Complete the closestNumbers function below.
-        static int[] closestNumbers(int[] arr)
+
+    // Complete the findMedian function below.
+    static void median(int[] a)
+    {
+        sorting(a);
+    }
+
+    static void sorting(int[] a)
+    {
+        a = new int[10];
+        int i, n, temp, j;
+        a = new int[10];
+        Console.WriteLine("Enter the size of array");
+        string inp = Console.ReadLine();
+        n = Convert.ToInt32(inp);
+        Console.WriteLine("Enter the array");
+        for (i = 0; i < n; i++)
+        {
+            Console.Write("Element {0}-", i);
+
+            a[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        Console.WriteLine("The array elements are:");
+        for (i = 0; i < n; i++)
+        {
+            Console.Write(a[i] + " ");
+        }
+        Console.WriteLine("\nThe sorted array elements are");
+        for (i = 0; i < n; i++)
+        {
+            for (j = i + 1; j < n; j++)
+            {
+                if (a[i] > a[j])
+                {
+                    temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
+                }
+            }
+            Console.Write(a[i]);
+        }
+    }
+
+    // Complete the closestNumbers function below.
+    static int[] closestNumbers(int[] arr)
         {
             return new int[] { };
         }
