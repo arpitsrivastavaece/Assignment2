@@ -7,12 +7,10 @@ namespace Assignment2_S19
     {
         static void Main(string[] args)
         {
-            // left rotation
-            Console.WriteLine("Left Rotation");
-            int d = 4;
-            int[] a = { 1, 2, 3, 4, 5 };
-            int[] r = rotLeft(a, d);
-            displayArray(r);
+            //Rotate Left
+            int[] a = new int[10]; int d = 0;
+            rotleft(a, d);
+            Console.ReadKey();//rotate left
 
             // Maximum toys
             Console.WriteLine("\n\nMaximum toys");
@@ -105,16 +103,57 @@ namespace Assignment2_S19
             {
                 Console.Write(n + " ");
             }
-        }
+        }*/
 
         // Complete the rotLeft function below.
-        static int[] rotLeft(int[] a, int d)
+        static void rotleft(int[] a, int d)
         {
-            return new int[] { };
+            int i, n;
+            a = new int[10];
+            Console.WriteLine("Enter the size of array");
+            string inp = Console.ReadLine();
+            n = Convert.ToInt32(inp);
+            Console.WriteLine("Enter the array");
+            for (i = 0; i < n; i++)
+            {
+                Console.Write("Element {0}-", i);
+
+                a[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine("The array elements are:");
+            for (i = 0; i < n; i++)
+            {
+                Console.Write(a[i] + " ");
+            }
+            Console.WriteLine("\nEnter the number of rotations");
+            string userinp = Console.ReadLine();
+            d = Convert.ToInt32(userinp);
+            for (i = 0; i < d; i++)
+            {
+                rotate(a, n);
+            }
+            for (i = 0; i < n; i++)
+            {
+                Console.Write(a[i] + " ");
+            }
         }
 
-        // Complete the maximumToys function below.
-        int maximumToys(int[] toys, int budget)
+        static void rotate(int[] a, int n)
+        {
+            int i, temp;
+            temp = a[0];
+            for (i = 0; i < n - 1; i++)
+            {
+                a[i] = a[i + 1];
+            }
+            a[i] = temp;
+        }//rotate left
+    
+
+
+
+// Complete the maximumToys function below.
+int maximumToys(int[] toys, int budget)
         {
             //Sorting the prices array in ascending order using Bubble sort
             int maxToys = 0;
