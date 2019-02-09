@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.IO;
 
 namespace Assignment2_S19
 {
@@ -15,52 +17,14 @@ namespace Assignment2_S19
             displayArray(r);
 
             // Maximum toys
+            //Maximum Toys
             Console.WriteLine("\n\nMaximum toys");
-            //Get Budget for toys
-            int a, k, ToyCount;
-            Console.WriteLine("Enter budget for buying toys:");
-            k = Convert.ToInt32(Console.ReadLine());
-            //Get Count of toys
-            Console.WriteLine("Enter the count of toys available:");
-            ToyCount = Convert.ToInt32(Console.ReadLine());
-            if (ToyCount > 1)
-            //Get prices for Toys
-            {
-                int[] prices = new int[ToyCount];
-                Console.WriteLine("Enter a list of prices:");
-                for (a = 0; a < ToyCount; a++)
-                {
-                    Console.Write("element - {0} : ", a);
-                    prices[a] = Convert.ToInt32(Console.ReadLine());
-
-                }
-                Console.WriteLine(maximumToys(prices, k));
-            }
-            else
-            {
-                if (ToyCount == 1)
-                {
-                    int single = 0;
-                    Console.WriteLine("Enter price of toy:");
-                    single = Convert.ToInt32(Console.ReadLine());
-                    if (k >= single)
-                    {
-                        Console.WriteLine("The available toy can be purchased:");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Budget is less than the price of toy");
-                        Console.ReadKey();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No toys available for purchase");
-                    Console.ReadKey();
-                }
-            }
-
+            Console.WriteLine("\nEnter budget for toys:");
+            int k = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nEnter a list of prices:");
+            int[] prices = Array.ConvertAll(Console.ReadLine().Split(' '), pricesTemp => Convert.ToInt32(pricesTemp));
+            Console.WriteLine(maximumToys(prices, k));
+            Console.ReadLine();
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums");
@@ -87,9 +51,15 @@ namespace Assignment2_S19
 
             // closest numbers
             Console.WriteLine("\n\nClosest numbers");
-            int[] arr3 = { 5, 4, 3, 2 };
-            int[] r4 = closestNumbers(arr3);
-            displayArray(r4);
+            Console.WriteLine("Enter size of array");
+            Console.ReadLine();
+            Console.WriteLine("Enter the space separated elements of the array");
+            string[] comps = Console.ReadLine().Split(' ');
+            int[] arr = Array.ConvertAll(comps, int.Parse);
+            int[] sortarr = BubbleSort(arr, arr.Length);
+            ClosestNumbers(sortarr);
+            Console.ReadLine();
+
 
             // Day of programmer
             Console.WriteLine("\n\nDay of Programmer");
@@ -115,48 +85,50 @@ namespace Assignment2_S19
         // Complete the maximumToys function below.
         int maximumToys(int[] toys, int budget)
         {
-            //Sorting the prices array in ascending order using Bubble sort
-            int maxToys = 0;
-            int temp = 0;
-            for (int j = 0; j <= toys.Length - 2; j++)
+            int maximumToys(int[] toys, int budget)
             {
-                for (int i = 0; i <= toys.Length - 2; i++)
+                //Sorting the prices array in ascending order using Bubble sort
+                int maxToys = 0;
+                int temp = 0;
+                for (int j = 0; j <= toys.Length - 2; j++)
                 {
-                    if (toys[i] > toys[i + 1])
+                    for (int i = 0; i <= toys.Length - 2; i++)
                     {
-                        temp = toys[i + 1];
-                        toys[i + 1] = toys[i];
-                        toys[i] = temp;
+                        if (toys[i] > toys[i + 1])
+                        {
+                            temp = toys[i + 1];
+                            toys[i + 1] = toys[i];
+                            toys[i] = temp;
+                        }
                     }
                 }
-            }
-            //foreach (int p in toys)
-            //Console.Write(p + " ");
-
-            //Comparing the sorted array with Mark's budget to find the maximum number of toys
-            for (int count = 0; count < toys.Length; count++)
-            {
-                budget = budget - toys[count];
-
-                if (budget < 0)
+                try
                 {
-                    Console.WriteLine("\n\nMaximum number of toys that can be bought: " + maxToys);
-                    break;
-
+                    //Comparing the sorted array with Mark's budget to find the maximum number of toys
+                    for (int count = 0; count < toys.Length; count++)
+                    {
+                        budget = budget - toys[count];
+                        if (budget < 0)
+                        {
+                            Console.WriteLine("\n\nMaximum number of toys that can be bought: " + maxToys);
+                            break;
+                        }
+                        else
+                        {
+                            maxToys++;
+                        }
+                    }
+                    return 0;
                 }
-                else
+                catch
                 {
-                    maxToys++;
+                    Console.WriteLine("Exception occured while computing maximumToys()");
+                    return 0;
                 }
             }
-            Console.ReadKey();
-            return 0;
-        }
-    }
 
-
-    // Complete the balancedSums function below.
-    static string balancedSums(List<int> arr)
+            // Complete the balancedSums function below.
+            static string balancedSums(List<int> arr)
         {
             return "";
         }
@@ -180,11 +152,59 @@ namespace Assignment2_S19
             return 0;
         }
 
-        // Complete the closestNumbers function below.
-        static int[] closestNumbers(int[] arr)
-        {
-            return new int[] { };
+            // Complete the closestNumbers function below.
+            static int[] ClosestNumbers(int[] sortarr)
+            {
+                try
+                {
+                    int diff = Math.Abs(sortarr[1] - sortarr[0]);
+                    ArrayList results = new ArrayList();
+                    results.Add(sortarr[0] + " " + sortarr[1]);
+                    int index;
+                    for (index = 1; index < sortarr.Length - 1; index++)
+                    {
+                        int tmp = Math.Abs(sortarr[index + 1] - sortarr[index]);
+                        if (tmp < diff)
+                        {
+                            diff = tmp;
+                            results.Clear();
+                            results.Add(sortarr[index] + " " + sortarr[index + 1]);
+                        }
+                        else if (tmp == diff)
+                        {
+                            results.Add(sortarr[index] + " " + sortarr[index + 1]);
+                            index++;
+                        }
+                    }
+                    Console.WriteLine(String.Join(" ", results.ToArray()));
+                }
+                catch
+                {
+                    Console.WriteLine("Exception Occured! Enter array in correct format.");
+                    Console.ReadLine();
+                }
+                int[] t = new int[0];
+                return t;
+            }
+            static int[] BubbleSort(int[] temparr, int n)
+            {
+                int temp;
+                for (int j = 0; j <= n - 2; j++)
+                {
+                    for (int i = 0; i <= n - 2; i++)
+                    {
+                        if (temparr[i] > temparr[i + 1])
+                        {
+                            temp = temparr[i + 1];
+                            temparr[i + 1] = temparr[i];
+                            temparr[i] = temp;
+                        }
+                    }
+                }
+                return temparr;
+            }
         }
+
 
         // Complete the dayOfProgrammer function below.
         static string dayOfProgrammer(int year)
