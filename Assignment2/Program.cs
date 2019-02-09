@@ -29,11 +29,12 @@ namespace Assignment2_S19
 
             // Missing numbers
             Console.WriteLine("\n\nMissing numbers");
-            int[] arr1 = { 203, 204, 205, 206, 207, 208, 203, 204, 205, 206 };
-            int[] brr = { 203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204 };
-            int[] r2 = missingNumbers(arr1, brr);
-            displayArray(r2);
-
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp));
+            int m = Convert.ToInt32(Console.ReadLine());
+            int[] brr = Array.ConvertAll(Console.ReadLine().Split(' '), brrTemp => Convert.ToInt32(brrTemp));
+            missingNumbers(arr, brr);
+           
             // grading students
             Console.WriteLine("\n\nGrading students");
             int[] grades = { 73, 67, 38, 33 };
@@ -200,15 +201,48 @@ namespace Assignment2_S19
         return "";
     }
 
-    // Complete the missingNumbers function below.
-    static int[] missingNumbers(int[] arr)
-    {
+        // Complete the missingNumbers function below.
+        static int[] missingNumbers(int[] ar1, int[] ar2)
+        {
+            try
+            {
+                int[] aHist = new int[100];
+                int[] bHist = new int[100];
+                int min = int.MaxValue;
 
-    }
+                foreach (int i in ar2)
+                {
+                    if (i < min)
+                    {
+                        min = i;
+                    }
+                }
+                foreach (int i in ar2)
+                {
+                    bHist[i - min]++;
+                }
+                foreach (int i in ar1)
+                {
+                    aHist[i - min]++;
+                }
+                for (int i = 0; i < 100; i++)
+                {
+                    if (aHist[i] < bHist[i])
+                    {
+                        Console.Write("{0} ", i + min);
+                    }
+                }
+                Console.ReadLine();
+            }
+            catch
+            {
+                Console.WriteLine("Exception occurred!");
+            }
+            return new int[] { };
+        }
 
-
-    // Complete the gradingStudents function below.
-    static int[] gradingStudents(int[] grades)
+        // Complete the gradingStudents function below.
+        static int[] gradingStudents(int[] grades)
     {
         try
         {
