@@ -14,51 +14,12 @@ namespace Assignment2_S19
 
             // Maximum toys
             Console.WriteLine("\n\nMaximum toys");
-            //Get Budget for toys
-            int a, k, ToyCount;
-            Console.WriteLine("Enter budget for buying toys:");
-            k = Convert.ToInt32(Console.ReadLine());
-            //Get Count of toys
-            Console.WriteLine("Enter the count of toys available:");
-            ToyCount = Convert.ToInt32(Console.ReadLine());
-            if (ToyCount > 1)
-            //Get prices for Toys
-            {
-                int[] prices = new int[ToyCount];
-                Console.WriteLine("Enter a list of prices:");
-                for (a = 0; a < ToyCount; a++)
-                {
-                    Console.Write("element - {0} : ", a);
-                    prices[a] = Convert.ToInt32(Console.ReadLine());
-
-                }
-                Console.WriteLine(maximumToys(prices, k));
-            }
-            else
-            {
-                if (ToyCount == 1)
-                {
-                    int single = 0;
-                    Console.WriteLine("Enter price of toy:");
-                    single = Convert.ToInt32(Console.ReadLine());
-                    if (k >= single)
-                    {
-                        Console.WriteLine("The available toy can be purchased:");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Budget is less than the price of toy");
-                        Console.ReadKey();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No toys available for purchase");
-                    Console.ReadKey();
-                }
-            }
-
+            Console.WriteLine("\nEnter budget for toys:");
+            int k = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nEnter a list of prices:");
+            int[] prices = Array.ConvertAll(Console.ReadLine().Split(' '), pricesTemp => Convert.ToInt32(pricesTemp));
+            Console.WriteLine(maximumToys(prices, k));
+            Console.ReadLine();
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums");
@@ -150,9 +111,6 @@ namespace Assignment2_S19
             a[i] = temp;
         }//rotate left
 
-
-
-
         // Complete the maximumToys function below.
         int maximumToys(int[] toys, int budget)
         {
@@ -171,33 +129,33 @@ namespace Assignment2_S19
                     }
                 }
             }
-            //foreach (int p in toys)
-            //Console.Write(p + " ");
-
-            //Comparing the sorted array with Mark's budget to find the maximum number of toys
-            for (int count = 0; count < toys.Length; count++)
+            try
             {
-                budget = budget - toys[count];
-
-                if (budget < 0)
+                //Comparing the sorted array with Mark's budget to find the maximum number of toys
+                for (int count = 0; count < toys.Length; count++)
                 {
-                    Console.WriteLine("\n\nMaximum number of toys that can be bought: " + maxToys);
-                    break;
-
+                    budget = budget - toys[count];
+                    if (budget < 0)
+                    {
+                        Console.WriteLine("\n\nMaximum number of toys that can be bought: " + maxToys);
+                        break;
+                    }
+                    else
+                    {
+                        maxToys++;
+                    }
                 }
-                else
-                {
-                    maxToys++;
-                }
+                return 0;
             }
-            Console.ReadKey();
-            return 0;
+            catch
+            {
+                Console.WriteLine("Exception occured while computing maximumToys()");
+                return 0;
+            }
         }
-    }
 
-
-    // Complete the balancedSums function below.
-    static string balancedSums(List<int> arr)
+        // Complete the balancedSums function below.
+        static string balancedSums(List<int> arr)
     {
         try
         {
