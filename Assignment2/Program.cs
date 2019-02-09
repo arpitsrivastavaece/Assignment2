@@ -48,9 +48,15 @@ namespace Assignment2_S19
 
             // closest numbers
             Console.WriteLine("\n\nClosest numbers");
-            int[] arr3 = { 5, 4, 3, 2 };
-            int[] r4 = closestNumbers(arr3);
-            displayArray(r4);
+            Console.WriteLine("Enter size of array");
+            Console.ReadLine();
+            Console.WriteLine("Enter the space separated elements of the array");
+            string[] comps = Console.ReadLine().Split(' ');
+            int[] arr = Array.ConvertAll(comps, int.Parse);
+            int[] sortarr = BubbleSort(arr, arr.Length);
+            ClosestNumbers(sortarr);
+            Console.ReadLine();
+
 
             // Day of programmer
             Console.WriteLine("\n\nDay of Programmer");
@@ -297,14 +303,63 @@ namespace Assignment2_S19
         }
     }
 
-    // Complete the closestNumbers function below.
-    static int[] closestNumbers(int[] arr)
+        // Complete the closestNumbers function below.
+        static int[] ClosestNumbers(int[] sortarr)
         {
-            return new int[] { };
+            try
+            {
+                int diff = Math.Abs(sortarr[1] - sortarr[0]);
+                ArrayList results = new ArrayList();
+                results.Add(sortarr[0] + " " + sortarr[1]);
+                int index;
+                for (index = 1; index < sortarr.Length - 1; index++)
+                {
+                    int tmp = Math.Abs(sortarr[index + 1] - sortarr[index]);
+                    if (tmp < diff)
+                    {
+                        diff = tmp;
+                        results.Clear();
+                        results.Add(sortarr[index] + " " + sortarr[index + 1]);
+                    }
+                    else if (tmp == diff)
+                    {
+                        results.Add(sortarr[index] + " " + sortarr[index + 1]);
+                        index++;
+                    }
+                }
+                Console.WriteLine(String.Join(" ", results.ToArray()));
+            }
+            catch
+            {
+                Console.WriteLine("Exception Occured!");
+                Console.ReadLine();
+            }
+            int[] t = new int[0];
+            return t;
         }
+        // Bubble Sort method
+        static int[] BubbleSort(int[] temparr, int n)
+        {
+            int temp;
+            for (int j = 0; j <= n - 2; j++)
+            {
+                for (int i = 0; i <= n - 2; i++)
+                {
+                    if (temparr[i] > temparr[i + 1])
+                    {
+                        temp = temparr[i + 1];
+                        temparr[i + 1] = temparr[i];
+                        temparr[i] = temp;
+                    }
+                }
+            }
+            return temparr;
+        }
+    }
 
-        // Complete the dayOfProgrammer function below.
-        static string dayOfProgrammer(int year)
+
+    // Complete the dayOfProgrammer function below.
+    static string dayOfProgrammer(int year)
         {
             return "";
         }
