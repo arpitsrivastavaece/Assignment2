@@ -196,7 +196,7 @@ namespace Assignment2_S19
             }
             catch
             {
-                Console.WriteLine("Exception Occured!");
+                Console.WriteLine("Exception Occurred!");
             }
             return "";
         }
@@ -206,26 +206,27 @@ namespace Assignment2_S19
         {
             try
             {
-                int[] aHist = new int[100];
+                int[] aHist = new int[100];//Problem statement informs us that there are only 100 different values
                 int[] bHist = new int[100];
                 int min = int.MaxValue;
 
-                foreach (int i in ar2)
+                foreach (int i in ar2) //Iterate ar1 to find the smalles value
                 {
                     if (i < min)
                     {
                         min = i;
                     }
                 }
-                foreach (int i in ar2)
+                foreach (int i in ar2)//Iterate ar2 to find frequency of smallest value and store at index 0
                 {
                     bHist[i - min]++;
                 }
-                foreach (int i in ar1)
+                foreach (int i in ar1)//Iterate ar1 to find frequency of smallest value and store at index 0
                 {
                     aHist[i - min]++;
                 }
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 100; i++)//Iterate frequency array and print the number obtained by
+                                               //adding current index to minimum value
                 {
                     if (aHist[i] < bHist[i])
                     {
@@ -347,25 +348,26 @@ namespace Assignment2_S19
             try
             {
                 int diff = Math.Abs(sortarr[1] - sortarr[0]);
-                ArrayList results = new ArrayList();
+                ArrayList results = new ArrayList();//Set up a list which will contain the list of numbers having minimum difference
                 results.Add(sortarr[0] + " " + sortarr[1]);
                 int index;
                 for (index = 1; index < sortarr.Length - 1; index++)
                 {
-                    int tmp = Math.Abs(sortarr[index + 1] - sortarr[index]);
+                    int tmp = Math.Abs(sortarr[index + 1] - sortarr[index]);//Tracking min difference between any
+                                                                            //two adjacent elements of the array
                     if (tmp < diff)
                     {
-                        diff = tmp;
+                        diff = tmp;//If difference of current element and next element is less than min clear the list
                         results.Clear();
                         results.Add(sortarr[index] + " " + sortarr[index + 1]);
                     }
-                    else if (tmp == diff)
+                    else if (tmp == diff)//If difference is equal to min add both elements to results array
                     {
                         results.Add(sortarr[index] + " " + sortarr[index + 1]);
                         index++;
                     }
                 }
-                Console.WriteLine(String.Join(" ", results.ToArray()));
+                Console.WriteLine(String.Join(" ", results.ToArray()));//Display the elements of results array
             }
             catch
             {
@@ -377,7 +379,7 @@ namespace Assignment2_S19
         }
 
 
-        // Bubble Sort method
+        // Bubble Sort method for sorting the array
         static int[] BubbleSort(int[] temparr, int n)
         {
             int temp;
