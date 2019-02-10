@@ -72,7 +72,7 @@ namespace Assignment2_S19
             {
                 Console.Write(n + " ");
             }
-        }*/
+        }
 
         // Complete the rotLeft function below.
         static void rotleft(int[] a, int d)
@@ -163,43 +163,43 @@ namespace Assignment2_S19
 
         // Complete the balancedSums function below.
         static string balancedSums(List<int> arr)
-    {
-        try
         {
-            int[] arr1 = arr.ToArray();
-            bool balance_check = false;
-            for (int i = 0; i < arr1.Length; i++)
+            try
             {
-                int sum_l = 0;
-                int sum_r = 0;
-                for (int j = 0; j < i; j++)
+                int[] arr1 = arr.ToArray();
+                bool balance_check = false;
+                for (int i = 0; i < arr1.Length; i++)
                 {
-                    sum_l += arr1[j];
+                    int sum_l = 0;
+                    int sum_r = 0;
+                    for (int j = 0; j < i; j++)
+                    {
+                        sum_l += arr1[j];
+                    }
+                    for (int k = i + 1; k < arr1.Length; k++)
+                    {
+                        sum_r += arr1[k];
+                    }
+                    if (sum_l == sum_r)
+                    {
+                        balance_check = true;
+                    }
                 }
-                for (int k = i + 1; k < arr1.Length; k++)
+                if (balance_check == true)
                 {
-                    sum_r += arr1[k];
+                    return "YES";
                 }
-                if (sum_l == sum_r)
+                else
                 {
-                    balance_check = true;
+                    return "NO";
                 }
             }
-            if (balance_check == true)
+            catch
             {
-                return "YES";
+                Console.WriteLine("Exception Occured!");
             }
-            else
-            {
-                return "NO";
-            }
+            return "";
         }
-        catch
-        {
-            Console.WriteLine("Exception Occured!");
-        }
-        return "";
-    }
 
         // Complete the missingNumbers function below.
         static int[] missingNumbers(int[] ar1, int[] ar2)
@@ -243,99 +243,103 @@ namespace Assignment2_S19
 
         // Complete the gradingStudents function below.
         static int[] gradingStudents(int[] grades)
-    {
-        try
-        {
-            int[] brr = new int[grades.Length];
-            bool cont = true;
-            for (int k = 0; k < brr.Length; k++)
+        { 
+            // This method takes returns an array with updated grades as per the guidelines mentioned in the problem.
+
+            try
             {
-                if (grades[k] < 0 || arr[k] > 100)
+                int[] updated = new int[grades.Length];// New array to store updated values
+                bool cont = true;// To check whether grades∈[0,100]
+                for (int k = 0; k < updated.Length; k++)
                 {
-                    cont = false;
-                }
-            }
-            if (cont == true)
-            {
-                for (int i = 0; i < grades.Length; i++)
-                {
-                    if (grades[i] > 37)
+                    if (grades[k] < 0 || grades[k] > 100)
                     {
-                        int quo = grades[i] / 5;
-                        int high_num = (quo + 1) * 5;
-                        if (high_num - grades[i] < 3)
-                        {
-                            brr[i] = high_num;
-                        }
-                        else
-                        {
-                            brr[i] = grades[i];
-                        }
-                    }
-                    else
-                    {
-                        brr[i] = arr[i];
+                        cont = false;
                     }
                 }
-            }
-            else
-            {
-                throw new Exception();
-            }
-
-            return brr;
-
-        }
-
-        catch
-        {
-            Console.WriteLine("Grades have to be between(and including) 0 and 100");
-        }
-        return new int[] { };
-    }
-
-
-    // Complete the findMedian function below.
-    static void median(int[] a)
-    {
-        sorting(a);
-    }
-
-    static void sorting(int[] a)
-    {
-        a = new int[10];
-        int i, n, temp, j;
-        a = new int[10];
-        Console.WriteLine("Enter the size of array");
-        string inp = Console.ReadLine();
-        n = Convert.ToInt32(inp);
-        Console.WriteLine("Enter the array");
-        for (i = 0; i < n; i++)
-        {
-            Console.Write("Element {0}-", i);
-
-            a[i] = Convert.ToInt32(Console.ReadLine());
-        }
-        Console.WriteLine("The array elements are:");
-        for (i = 0; i < n; i++)
-        {
-            Console.Write(a[i] + " ");
-        }
-        Console.WriteLine("\nThe sorted array elements are");
-        for (i = 0; i < n; i++)
-        {
-            for (j = i + 1; j < n; j++)
-            {
-                if (a[i] > a[j])
+                if (cont == true)// range ∈ [0,100]
                 {
-                    temp = a[i];
-                    a[i] = a[j];
-                    a[j] = temp;
+                    for (int i = 0; i < grades.Length; i++)
+                    {
+                        if (grades[i] > 37)//maximum limit to convert to passing grade
+                        {
+                            int quo = grades[i] / 5;// Quotient after dividing by 5(for approximation)
+                            int high_num = (quo + 1) * 5;// The next multiple of 5
+                                                         //Approximation
+                            if (high_num - grades[i] < 3)
+                            {
+                                updated[i] = high_num;
+                            }
+                            else
+                            {
+                                updated[i] = grades[i];
+                            }
+                        }
+                        else// grade<37
+                        {
+                            updated[i] = grades[i];
+                        }
+                    }
                 }
+                else// if even one grade is out of range
+                {
+                    throw new Exception();// Exception thrown
+                }
+
+                return updated;// Updated values are returned
+
             }
-            Console.Write(a[i]);
+
+
+            catch
+            {
+                Console.WriteLine("Grades have to be between(and including) 0 and 100");//Exception
+            }
+            return new int[] { };
         }
-    }
+
+
+        // Complete the findMedian function below.
+        static void median(int[] a)
+        {
+            sorting(a);
+        }
+
+        static void sorting(int[] a)
+        {
+            a = new int[10];
+            int i, n, temp, j;
+            a = new int[10];
+            Console.WriteLine("Enter the size of array");
+            string inp = Console.ReadLine();
+            n = Convert.ToInt32(inp);
+            Console.WriteLine("Enter the array");
+            for (i = 0; i < n; i++)
+            {
+                Console.Write("Element {0}-", i);
+
+                a[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine("The array elements are:");
+            for (i = 0; i < n; i++)
+            {
+                Console.Write(a[i] + " ");
+            }
+            Console.WriteLine("\nThe sorted array elements are");
+            for (i = 0; i < n; i++)
+            {
+                for (j = i + 1; j < n; j++)
+                {
+                    if (a[i] > a[j])
+                    {
+                        temp = a[i];
+                        a[i] = a[j];
+                        a[j] = temp;
+                    }
+                }
+                Console.Write(a[i]);
+            }
+        }
 
         // Complete the closestNumbers function below.
         static int[] ClosestNumbers(int[] sortarr)
@@ -371,6 +375,8 @@ namespace Assignment2_S19
             int[] t = new int[0];
             return t;
         }
+
+
         // Bubble Sort method
         static int[] BubbleSort(int[] temparr, int n)
         {
@@ -389,7 +395,6 @@ namespace Assignment2_S19
             }
             return temparr;
         }
-    }
 
 
     // Complete the dayOfProgrammer function below.
