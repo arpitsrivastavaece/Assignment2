@@ -397,9 +397,46 @@ namespace Assignment2_S19
         }
 
 
-    // Complete the dayOfProgrammer function below.
-    static string dayOfProgrammer(int year)
+        // Complete the dayOfProgrammer function below.
+        static string dayOfProgrammer(int year)
         {
+            try
+            {
+                int day = 13;
+
+                if (year < 2701 && year > 1699)
+                {
+                    if (year <= 1917)
+                    {
+                        if (year % 4 == 0)
+                        {
+                            day -= 1;
+                        }
+                    }
+                    else if (year == 1918)
+                    {
+                        day += 13;
+                    }
+                    else
+                    {
+                        if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))
+                        {
+                            day -= 1;
+                        }
+                    }
+                    return day + ".09." + year;
+
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Year does not belong to [1700,2700]");
+            }
+
             return "";
         }
     }
