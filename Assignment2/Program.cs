@@ -54,7 +54,7 @@ namespace Assignment2_S19
             Console.WriteLine("Enter the space separated elements of the array");
             string[] comps = Console.ReadLine().Split(' ');
             int[] arr_closest = Array.ConvertAll(comps, int.Parse);
-            int[] sortarr = BubbleSort(arr_closest, arr_closest.Length);
+            int[] sortarr = BubbleSort(arr_closest);
             ClosestNumbers(sortarr);
             Console.ReadLine();
 
@@ -74,7 +74,7 @@ namespace Assignment2_S19
             }
         }
 
-        // Complete the rotLeft function below.
+        // rotLeft function
         static void rotleft(int[] a, int d)
         {
             int i, n;
@@ -118,7 +118,7 @@ namespace Assignment2_S19
             a[i] = temp;
         }//rotate left
 
-        // Complete the maximumToys function below.
+        // maximumToys function
         static int maximumToys(int[] toys, int budget)
         {
             //Sorting the prices array in ascending order using Bubble sort
@@ -161,7 +161,7 @@ namespace Assignment2_S19
             }
         }
 
-        // Complete the balancedSums function below.
+        // balancedSums function
         static string balancedSums(List<int> arr1)
         {
             try
@@ -201,7 +201,7 @@ namespace Assignment2_S19
             return "";
         }
 
-        // Complete the missingNumbers function below.
+        // missingNumbers function
         static int[] missingNumbers(int[] ar1, int[] ar2)
         {
             try
@@ -242,7 +242,7 @@ namespace Assignment2_S19
             return new int[] { };
         }
 
-        // Complete the gradingStudents function below.
+        // gradingStudents function
         static int[] gradingStudents(int[] grades)
         { 
             // This method takes returns an array with updated grades as per the guidelines mentioned in the problem.
@@ -300,59 +300,24 @@ namespace Assignment2_S19
         }
 
 
-        // Complete the findMedian function below.
+        // findMedian function
         static int median(int[] a)
         {
-            int[] new_arr = BubbleSort(a);
-            int median_arr;
-            if(new_arr.Length%2!=0)
+            int[] new_arr = BubbleSort(a);//Sorted array
+            int median_arr;// median of the array
+            if(new_arr.Length%2!=0)// median principle for odd length while taking into consideration that array indexing starts form 0
             {
                 median_arr = new_arr[(new_arr.Length - 1) / 2];
             }
-            else
+            else// median principle for even length while taking into consideration that array indexing starts from 0
             {
                 median_arr = new_arr[((new_arr[(new_arr.Length - 2) / 2]) + (new_arr[new_arr.Length / 2])) / 2];
             }
-            return median_arr;
+            return median_arr;// returns median
         }
 
-        static void sorting(int[] a)
-        {
-            a = new int[10];
-            int i, n, temp, j;
-            a = new int[10];
-            Console.WriteLine("Enter the size of array");
-            string inp = Console.ReadLine();
-            n = Convert.ToInt32(inp);
-            Console.WriteLine("Enter the array");
-            for (i = 0; i < n; i++)
-            {
-                Console.Write("Element {0}-", i);
 
-                a[i] = Convert.ToInt32(Console.ReadLine());
-            }
-            Console.WriteLine("The array elements are:");
-            for (i = 0; i < n; i++)
-            {
-                Console.Write(a[i] + " ");
-            }
-            Console.WriteLine("\nThe sorted array elements are");
-            for (i = 0; i < n; i++)
-            {
-                for (j = i + 1; j < n; j++)
-                {
-                    if (a[i] > a[j])
-                    {
-                        temp = a[i];
-                        a[i] = a[j];
-                        a[j] = temp;
-                    }
-                }
-                Console.Write(a[i]);
-            }
-        }
-
-        // Complete the closestNumbers function below.
+        // closestNumbers function
         static int[] ClosestNumbers(int[] sortarr)
         {
             try
@@ -389,6 +354,51 @@ namespace Assignment2_S19
         }
 
 
+        // Day of the programmer function
+        static string dayOfProgrammer(int year)
+        {
+            try
+            {
+                int day = 13;// for a regular year the day of the programmer is on 12.09.yyyy
+
+                // Since the day for regular year has already been set, only day change in leap year is required
+
+                if (year < 2701 && year > 1699)// If year is out of this range, exception is thrown
+                {
+                    if (year <= 1917)//Julian Calender System
+                    {
+                        if (year % 4 == 0)// Julian leap year
+                        {
+                            day -= 1;// To take one extra day in feb into consideration
+                        }
+                    }
+                    else if (year == 1918)//The year where transition was compensated by reducing 13 days in feb
+                    {
+                        day += 13;// To take 13 less days into consideration
+                    }
+                    else// Gregorian Calender System
+                    {
+                        if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))// Gregorian principle for leap year
+                        {
+                            day -= 1;
+                        }
+                    }
+                    return day + ".09." + year;
+
+                }
+                else// If the year is out of time machine's range, exception is thrown
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Year does not belong to [1700,2700]");
+            }
+
+            return "";
+        }
+
         // Bubble Sort method for sorting the array
         static int[] BubbleSort(int[] temparr)
         {
@@ -407,50 +417,6 @@ namespace Assignment2_S19
                 }
             }
             return temparr;
-        }
-
-
-        // Complete the dayOfProgrammer function below.
-        static string dayOfProgrammer(int year)
-        {
-            try
-            {
-                int day = 13;
-
-                if (year < 2701 && year > 1699)
-                {
-                    if (year <= 1917)
-                    {
-                        if (year % 4 == 0)
-                        {
-                            day -= 1;
-                        }
-                    }
-                    else if (year == 1918)
-                    {
-                        day += 13;
-                    }
-                    else
-                    {
-                        if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))
-                        {
-                            day -= 1;
-                        }
-                    }
-                    return day + ".09." + year;
-
-                }
-                else
-                {
-                    throw new Exception();
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Year does not belong to [1700,2700]");
-            }
-
-            return "";
         }
     }
 }
