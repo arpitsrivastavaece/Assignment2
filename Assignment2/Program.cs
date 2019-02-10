@@ -23,8 +23,8 @@ namespace Assignment2_S19
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums");
-            List<int> arr = new List<int> { 1, 2, 3 };
-            Console.WriteLine(balancedSums(arr));
+            List<int> arr1 = new List<int> { 1, 2, 3 };
+            Console.WriteLine(balancedSums(arr1));
             Console.ReadLine();
 
             // Missing numbers
@@ -43,8 +43,8 @@ namespace Assignment2_S19
 
             // find the median
             Console.WriteLine("\n\nFind the median");
-            int[] a = new int[10];
-            median(a);
+            int[] med = new int[10];
+            median(med);
             Console.ReadKey();
 
             // closest numbers
@@ -53,8 +53,8 @@ namespace Assignment2_S19
             Console.ReadLine();
             Console.WriteLine("Enter the space separated elements of the array");
             string[] comps = Console.ReadLine().Split(' ');
-            int[] arr = Array.ConvertAll(comps, int.Parse);
-            int[] sortarr = BubbleSort(arr, arr.Length);
+            int[] arr_closest = Array.ConvertAll(comps, int.Parse);
+            int[] sortarr = BubbleSort(arr_closest, arr_closest.Length);
             ClosestNumbers(sortarr);
             Console.ReadLine();
 
@@ -119,7 +119,7 @@ namespace Assignment2_S19
         }//rotate left
 
         // Complete the maximumToys function below.
-        int maximumToys(int[] toys, int budget)
+        static int maximumToys(int[] toys, int budget)
         {
             //Sorting the prices array in ascending order using Bubble sort
             int maxToys = 0;
@@ -162,23 +162,23 @@ namespace Assignment2_S19
         }
 
         // Complete the balancedSums function below.
-        static string balancedSums(List<int> arr)
+        static string balancedSums(List<int> arr1)
         {
             try
             {
-                int[] arr1 = arr.ToArray();
+                int[] arr2= arr1.ToArray();
                 bool balance_check = false;
-                for (int i = 0; i < arr1.Length; i++)
+                for (int i = 0; i < arr2.Length; i++)
                 {
                     int sum_l = 0;
                     int sum_r = 0;
                     for (int j = 0; j < i; j++)
                     {
-                        sum_l += arr1[j];
+                        sum_l += arr2[j];
                     }
-                    for (int k = i + 1; k < arr1.Length; k++)
+                    for (int k = i + 1; k < arr2.Length; k++)
                     {
-                        sum_r += arr1[k];
+                        sum_r += arr2[k];
                     }
                     if (sum_l == sum_r)
                     {
@@ -301,9 +301,19 @@ namespace Assignment2_S19
 
 
         // Complete the findMedian function below.
-        static void median(int[] a)
+        static int median(int[] a)
         {
-            sorting(a);
+            int[] new_arr = BubbleSort(a);
+            int median_arr;
+            if(new_arr.Length%2!=0)
+            {
+                median_arr = new_arr[(new_arr.Length - 1) / 2];
+            }
+            else
+            {
+                median_arr = new_arr[((new_arr[(new_arr.Length - 2) / 2]) + (new_arr[new_arr.Length / 2])) / 2];
+            }
+            return median_arr;
         }
 
         static void sorting(int[] a)
@@ -380,9 +390,10 @@ namespace Assignment2_S19
 
 
         // Bubble Sort method for sorting the array
-        static int[] BubbleSort(int[] temparr, int n)
+        static int[] BubbleSort(int[] temparr)
         {
             int temp;
+            int n = temparr.Length;
             for (int j = 0; j <= n - 2; j++)
             {
                 for (int i = 0; i <= n - 2; i++)
