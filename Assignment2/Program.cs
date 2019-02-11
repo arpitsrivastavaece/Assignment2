@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Assignment2_S19
@@ -8,32 +9,36 @@ namespace Assignment2_S19
         static void Main(string[] args)
         {
             //Rotate Left
+            Console.WriteLine("Rotate Left\n");
             int[] a = new int[10]; int d = 0;
             rotleft(a, d);
-            Console.ReadKey();//rotate left
+            Console.ReadKey();
 
             // Maximum toys
             Console.WriteLine("\n\nMaximum toys");
             Console.WriteLine("\nEnter budget for toys:");
             int k = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\nEnter a list of prices:");
+            Console.WriteLine("\nEnter a list of prices separated by single spaces:");
             int[] prices = Array.ConvertAll(Console.ReadLine().Split(' '), pricesTemp => Convert.ToInt32(pricesTemp));
-            Console.WriteLine(maximumToys(prices, k));
+            Console.WriteLine("\nMaximum number of toys that can be bought: {0}",maximumToys(prices, k));
             Console.ReadLine();
 
             // Balanced sums
-            Console.WriteLine("\n\nBalanced sums");
-            List<int> arr1 = new List<int> { 1, 2, 3 };
+            Console.WriteLine("\n\nBalanced sums\n");
+            List<int> arr1 = new List<int> { 1, 2, 3, 3 };
+            int[] list_arr = arr1.ToArray();
+            Console.Write("Is array ");
+            displayArray(list_arr);
+            Console.Write("\nBalanced?  ");
             Console.WriteLine(balancedSums(arr1));
             Console.ReadLine();
 
             // Missing numbers
-            Console.WriteLine("\n\nMissing numbers");
-            int n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\n\nMissing numbers\nEnter first array seperated by spaces: ");
             int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp));
-            int m = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter second array sepeated by single spaces: ");
             int[] brr = Array.ConvertAll(Console.ReadLine().Split(' '), brrTemp => Convert.ToInt32(brrTemp));
-            missingNumbers(arr, brr);
+            Console.WriteLine("The missing numbers in the first array are:{{0}}",missingNumbers(arr, brr));
            
             // grading students
             Console.WriteLine("\n\nGrading students");
@@ -43,8 +48,8 @@ namespace Assignment2_S19
 
             // find the median
             Console.WriteLine("\n\nFind the median");
-            int[] med = new int[10];
-            median(med);
+            int[] med = { 1, 2, 3, 4, 5, 6 };
+            Console.WriteLine("The median is {0}",median(med));
             Console.ReadKey();
 
             // closest numbers
@@ -60,8 +65,8 @@ namespace Assignment2_S19
 
 
             // Day of programmer
-            Console.WriteLine("\n\nDay of Programmer");
-            int year = 2017;
+            Console.WriteLine("\n\nDay of Programmer\nEnter the year: ");
+            int year = Int32.Parse(Console.ReadLine());
             Console.WriteLine(dayOfProgrammer(year));
         }
 
@@ -101,6 +106,7 @@ namespace Assignment2_S19
             {
                 rotate(a, n);
             }
+            Console.Write("Array after {0} rotations: ", d);
             for (i = 0; i < n; i++)
             {
                 Console.Write(a[i] + " ");
@@ -144,7 +150,6 @@ namespace Assignment2_S19
                     budget = budget - toys[count];
                     if (budget < 0)
                     {
-                        Console.WriteLine("\n\nMaximum number of toys that can be bought: " + maxToys);
                         break;
                     }
                     else
@@ -152,7 +157,7 @@ namespace Assignment2_S19
                         maxToys++;
                     }
                 }
-                return 0;
+                return maxToys;
             }
             catch
             {
@@ -301,7 +306,7 @@ namespace Assignment2_S19
 
 
         // findMedian function
-        static int median(int[] a)
+        static float median(int[] a)
         {
             int[] new_arr = BubbleSort(a);//Sorted array
             int median_arr;// median of the array
