@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Assignment2_S19
 {
@@ -16,13 +18,17 @@ namespace Assignment2_S19
             */
 
             //Rotate Left
-            Console.WriteLine("Rotate Left\n");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Rotate Left");
+            Console.WriteLine("___________________________\n");
             int[] a = new int[10]; int d = 0;
             displayArray(rotleft(a, d));
             Console.ReadLine();
 
             // Maximum toys
-            Console.WriteLine("\n\nMaximum toys");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Maximum toys");
+            Console.WriteLine("___________________________");
             Console.WriteLine("\nEnter budget for toys:");
             int k = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\nEnter a list of prices separated by single spaces: ");
@@ -31,7 +37,9 @@ namespace Assignment2_S19
             Console.ReadLine();
 
             // Balanced sums
-            Console.WriteLine("\n\nBalanced sums\n");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Balanced sums");
+            Console.WriteLine("___________________________");
             Console.WriteLine("\nEnter a array with elements separated by single spaces: ");
             int[] list_arr = Array.ConvertAll(Console.ReadLine().Split(' '), list_arrTemp => Convert.ToInt32(list_arrTemp));
             Console.Write("\nBalanced?  ");
@@ -39,40 +47,48 @@ namespace Assignment2_S19
             Console.ReadLine();
 
             // Missing numbers
-            Console.WriteLine("\n\nMissing numbers\nEnter first array separated by single spaces: ");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Missing numbers\n___________________________\nEnter first array separated by single spaces: ");
             int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp));
-            Console.WriteLine("Enter second array separated by single spaces: ");
+            Console.WriteLine("\nEnter second array separated by single spaces: ");
             int[] brr = Array.ConvertAll(Console.ReadLine().Split(' '), brrTemp => Convert.ToInt32(brrTemp));
-            Console.Write("The missing numbers in the first array are: ");
-            displayArray(missingNumbers(arr, brr));
+            Console.Write("The missing numbers are: ");
+            missingNumbers(arr, brr);
             Console.ReadLine();
-           
+
             // grading students
-            Console.WriteLine("\n\nGrading students\n");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Grading students");
+            Console.WriteLine("___________________________");
             Console.WriteLine("Enter grades separated by single spaces: ");
             int[] grades = Array.ConvertAll(Console.ReadLine().Split(' '), gradesTemp => Convert.ToInt32(gradesTemp));
             int[] r3 = gradingStudents(grades);
             Console.Write("The converted grades are: ");
             displayArray(r3);
+            Console.ReadLine();
 
             // find the median
-            Console.WriteLine("\n\nFind the median");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Find the median");
+            Console.WriteLine("___________________________");
             Console.WriteLine("Enter elements of the array (with odd number of elements) separated by single spaces: ");
             int[] med = Array.ConvertAll(Console.ReadLine().Split(' '), medTemp => Convert.ToInt32(medTemp));
             Console.WriteLine("The median is {0}",findmedian(med));
-            Console.ReadKey();
+            Console.ReadLine();
 
             // closest numbers
-            Console.WriteLine("\n\nClosest numbers");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Closest numbers");
+            Console.WriteLine("___________________________");
             Console.WriteLine("Enter the elements of the array separated by single spaces: ");
             int[] arr_closest = Array.ConvertAll(Console.ReadLine().Split(' '), arr_closestTemp => Convert.ToInt32(arr_closestTemp));
-            int[] sortarr = BubbleSort(arr_closest);
-            ClosestNumbers(sortarr);
+            ClosestNumbers(arr_closest);
             Console.ReadLine();
 
 
             // Day of programmer
-            Console.WriteLine("\n\nDay of Programmer\n\nEnter the year: ");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("Day of Programmer\n___________________________\nEnter the year: ");
             int year = Int32.Parse(Console.ReadLine());
             Console.WriteLine("The day of Programmer: {0}",dayOfProgrammer(year));
             Console.ReadLine();
@@ -142,29 +158,18 @@ namespace Assignment2_S19
         //Left Rotate
 
         // maximumToys function
-        static int maximumToys(int[] toys, int budget)
+        static int maximumToys(int[] toyPrices, int budget)
         {
             //Sorting the prices array in ascending order using Bubble sort
-            int maxToys = 0;
-            int temp = 0;
-            for (int j = 0; j <= toys.Length - 2; j++)
-            {
-                for (int i = 0; i <= toys.Length - 2; i++)
-                {
-                    if (toys[i] > toys[i + 1])
-                    {
-                        temp = toys[i + 1];
-                        toys[i + 1] = toys[i];
-                        toys[i] = temp;
-                    }
-                }
-            }
+            int[] sortPrices = BubbleSort(toyPrices);
             try
             {
                 //Comparing the sorted array with Mark's budget to find the maximum number of toys
-                for (int count = 0; count < toys.Length; count++)
+                int maxToys = 0;
+                for (int count = 0; count < sortPrices.Length; count++)
                 {
-                    budget = budget - toys[count];
+                    budget = budget - sortPrices[count];
+
                     if (budget < 0)
                     {
                         break;
@@ -178,35 +183,37 @@ namespace Assignment2_S19
             }
             catch
             {
-                Console.WriteLine("Exception occured while computing maximumToys()");
-                return 0;
+                Console.WriteLine("Exception occurred while computing maximumToys()");
+
             }
+            return 0;
         }
+
 
         // balancedSums function
         static string balancedSums(int[] arr2)
         {
             try
             { 
-                bool balance_check = false;
+                bool balance_check = false;// to check whether it's balanced around an element or not
                 for (int i = 0; i < arr2.Length; i++)
                 {
-                    int sum_l = 0;
-                    int sum_r = 0;
+                    int sum_l = 0;// sum of left elements
+                    int sum_r = 0;// sum of right elements
                     for (int j = 0; j < i; j++)
                     {
-                        sum_l += arr2[j];
+                        sum_l += arr2[j];// getting sum of all elements to the left
                     }
                     for (int k = i + 1; k < arr2.Length; k++)
                     {
-                        sum_r += arr2[k];
+                        sum_r += arr2[k];// getting sum of all elements to the right
                     }
                     if (sum_l == sum_r)
                     {
-                        balance_check = true;
+                        balance_check = true;// if element passes the criteria
                     }
                 }
-                if (balance_check == true)
+                if (balance_check == true)// returning values
                 {
                     return "YES";
                 }
@@ -223,47 +230,46 @@ namespace Assignment2_S19
         }
 
         // missingNumbers function
-        static int[] missingNumbers(int[] ar1, int[] ar2)
+        // Complete the missingNumbers function below.
+        static void missingNumbers(int[] ar1, int[] ar2)
         {
             try
             {
-                int[] aHist = new int[100];//Problem statement informs us that there are only 100 different values
-                int[] bHist = new int[100];
-                int min = int.MaxValue;
+                int min1 = ar1.Min();
+                int min2 = ar2.Min();
+                int max1 = ar1.Max();
+                int max2 = ar2.Max();
 
-                foreach (int i in ar2) //Iterate ar1 to find the smalles value
+                int min = Math.Min(min1, min2);
+                int max = Math.Max(max1, max2);
+
+                int[] aFreq = new int[max - min + 1];//Create two frequency arrays that 								maintains the frequency of each element
+                int[] bFreq = new int[max - min + 1];
+
+                for (int i = 0; i < ar1.Length; i++)//Iterate ar1 to find frequency of 								smallest value and store at index 0
                 {
-                    if (i < min)
+                    aFreq[ar1[i] - min]++;
+                }
+                for (int i = 0; i < ar2.Length; i++)//Iterate ar2 to find frequency of 								smallest value and store at index 0
+                {
+                    bFreq[ar2[i] - min]++;
+                }
+                for (int i = 0; i < aFreq.Length; i++)//Iterate frequency array and print 								the number obtained by
+                                                      //adding current index to minimum 									value
+                {
+                    if (aFreq[i] != bFreq[i])
                     {
-                        min = i;
+                        Console.Write(i + min + " ");
                     }
                 }
-                foreach (int i in ar2)//Iterate ar2 to find frequency of smallest value and store at index 0
-                {
-                    bHist[i - min]++;
-                }
-                foreach (int i in ar1)//Iterate ar1 to find frequency of smallest value and store at index 0
-                {
-                    aHist[i - min]++;
-                }
-                List<int> newlist = new List<int>();
-                for (int i = 0; i < 100; i++)//Iterate frequency array and print the number obtained by
-                                               //adding current index to minimum value
-                {
-                    if (aHist[i] < bHist[i])
-                    {
-                        newlist.Add(i + min);
-                    }
-                }
-                int[] newarr = newlist.ToArray();
-                return newarr;
             }
             catch
             {
                 Console.WriteLine("Exception occurred!");
             }
-            return new int[] { };
         }
+
+
 
         // gradingStudents function
         static int[] gradingStudents(int[] grades)
@@ -351,40 +357,43 @@ namespace Assignment2_S19
 
 
         // closestNumbers function
-        static int[] ClosestNumbers(int[] sortarr)
+        static int[] ClosestNumbers(int[] arr)
         {
             try
             {
-                int diff = Math.Abs(sortarr[1] - sortarr[0]);
-                ArrayList results = new ArrayList();//Set up a list which will contain the list of numbers having minimum difference
+                int[] sortarr = BubbleSort(arr);//Using BubbleSort method to sort the array
+                int diff = int.MaxValue; //diff represents the maximum value that int can represent
+                                         //Tracking lowest value was difficult so starting with high value
+                ArrayList results = new ArrayList();
                 results.Add(sortarr[0] + " " + sortarr[1]);
                 int index;
-                for (index = 1; index < sortarr.Length - 1; index++)
+                for (index = 0; index < sortarr.Length - 1; index++)
                 {
-                    int tmp = Math.Abs(sortarr[index + 1] - sortarr[index]);//Tracking min difference between any
-                                                                            //two adjacent elements of the array
+                    int tmp = sortarr[index + 1] - sortarr[index];
                     if (tmp < diff)
                     {
-                        diff = tmp;//If difference of current element and next element is less than min clear the list
+                        diff = tmp; //If difference of current and subsequent element is less than diff then clear the array
                         results.Clear();
-                        results.Add(sortarr[index] + " " + sortarr[index + 1]);
+                        results.Add(sortarr[index]); //Add current and subsequent element into array
+                        results.Add(sortarr[index + 1]);
                     }
-                    else if (tmp == diff)//If difference is equal to min add both elements to results array
+                    else if (diff == tmp) //If difference of current and subsequent element is equal to diff
                     {
-                        results.Add(sortarr[index] + " " + sortarr[index + 1]);
-                        index++;
+                        results.Add(sortarr[index]);// Add current and subsequent element into array
+                        results.Add(sortarr[index + 1]);
                     }
                 }
-                Console.WriteLine(String.Join(" ", results.ToArray()));//Display the elements of results array
+                Console.WriteLine(String.Join(" ", results.ToArray())); //Display valid pairs in a single line
             }
             catch
             {
-                Console.WriteLine("Exception Occured!");
+                Console.WriteLine("Exception Occurred!");
                 Console.ReadLine();
             }
             int[] t = new int[0];
             return t;
         }
+
 
 
         // Day of the programmer function
