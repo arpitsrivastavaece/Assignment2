@@ -60,7 +60,7 @@ namespace Assignment2_S19
             string[] comps = Console.ReadLine().Split(' ');
             int[] arr_closest = Array.ConvertAll(comps, int.Parse);
             int[] sortarr = BubbleSort(arr_closest);
-            ClosestNumbers(sortarr);
+            //ClosestNumbers(sortarr);
             Console.ReadLine();
 
 
@@ -85,33 +85,33 @@ namespace Assignment2_S19
             int i, n;
             a = new int[10];
             Console.WriteLine("Enter the size of array");
-            string inp = Console.ReadLine();
+            string inp = Console.ReadLine(); //input array with size 
             n = Convert.ToInt32(inp);
             Console.WriteLine("Enter the array");
             for (i = 0; i < n; i++)
             {
-                Console.Write("Element {0}-", i);
+                Console.Write("Element {0}-", i);// one element at a time 
 
                 a[i] = Convert.ToInt32(Console.ReadLine());
             }
             Console.WriteLine("The array elements are:");
             for (i = 0; i < n; i++)
             {
-                Console.Write(a[i] + " ");
+                Console.Write(a[i] + " ");// print entered array
             }
             Console.WriteLine("\nEnter the number of rotations");
             string userinp = Console.ReadLine();
-            d = Convert.ToInt32(userinp);
+            d = Convert.ToInt32(userinp);//input rotations
             for (i = 0; i < d; i++)
             {
-                rotate(a, n);
+                rotate(a, n);// calling the rotate function
             }
             Console.Write("Array after {0} rotations: ", d);
             for (i = 0; i < n; i++)
             {
                 Console.Write(a[i] + " ");
             }
-        }
+        }// leftrotate
 
         static void rotate(int[] a, int n)
         {
@@ -119,10 +119,11 @@ namespace Assignment2_S19
             temp = a[0];
             for (i = 0; i < n - 1; i++)
             {
-                a[i] = a[i + 1];
+                a[i] = a[i + 1];//formula for putting next element in the first place
             }
             a[i] = temp;
-        }//rotate left
+        }//rotate
+        //Left Rotate
 
         // maximumToys function
         static int maximumToys(int[] toys, int budget)
@@ -322,7 +323,7 @@ namespace Assignment2_S19
         }
 
 
-        // closestNumbers function
+        /*// closestNumbers function
         static int[] ClosestNumbers(int[] sortarr)
         {
             try
@@ -356,7 +357,7 @@ namespace Assignment2_S19
             }
             int[] t = new int[0];
             return t;
-        }
+        }*/
 
 
         // Day of the programmer function
