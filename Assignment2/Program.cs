@@ -8,66 +8,73 @@ namespace Assignment2_S19
     {
         static void Main(string[] args)
         {
+            /*
+            // test of BubbleSort()
+            int[] test = { 1, 2, 3, 4, 5, 4, 3, 2, 1 };
+            displayArray(BubbleSort(test));
+            Console.ReadLine();
+            */
+
             //Rotate Left
             Console.WriteLine("Rotate Left\n");
             int[] a = new int[10]; int d = 0;
-            rotleft(a, d);
-            Console.ReadKey();
+            displayArray(rotleft(a, d));
+            Console.ReadLine();
 
             // Maximum toys
             Console.WriteLine("\n\nMaximum toys");
             Console.WriteLine("\nEnter budget for toys:");
             int k = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\nEnter a list of prices separated by single spaces:");
+            Console.WriteLine("\nEnter a list of prices separated by single spaces: ");
             int[] prices = Array.ConvertAll(Console.ReadLine().Split(' '), pricesTemp => Convert.ToInt32(pricesTemp));
             Console.WriteLine("\nMaximum number of toys that can be bought: {0}",maximumToys(prices, k));
             Console.ReadLine();
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums\n");
-            List<int> arr1 = new List<int> { 1, 2, 3, 3 };
-            int[] list_arr = arr1.ToArray();
-            Console.Write("Is array ");
-            displayArray(list_arr);
+            Console.WriteLine("\nEnter a array with elements separated by single spaces: ");
+            int[] list_arr = Array.ConvertAll(Console.ReadLine().Split(' '), list_arrTemp => Convert.ToInt32(list_arrTemp));
             Console.Write("\nBalanced?  ");
-            Console.WriteLine(balancedSums(arr1));
+            Console.WriteLine(balancedSums(list_arr));
             Console.ReadLine();
 
             // Missing numbers
-            Console.WriteLine("\n\nMissing numbers\nEnter first array seperated by spaces: ");
+            Console.WriteLine("\n\nMissing numbers\nEnter first array separated by single spaces: ");
             int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp));
-            Console.WriteLine("Enter second array sepeated by single spaces: ");
+            Console.WriteLine("Enter second array separated by single spaces: ");
             int[] brr = Array.ConvertAll(Console.ReadLine().Split(' '), brrTemp => Convert.ToInt32(brrTemp));
-            Console.WriteLine("The missing numbers in the first array are:{{0}}",missingNumbers(arr, brr));
+            Console.Write("The missing numbers in the first array are: ");
+            missingNumbers(arr, brr);
            
             // grading students
-            Console.WriteLine("\n\nGrading students");
-            int[] grades = { 73, 67, 38, 33 };
+            Console.WriteLine("\n\nGrading students\n");
+            Console.WriteLine("Enter grades separated by single spaces: ");
+            int[] grades = Array.ConvertAll(Console.ReadLine().Split(' '), gradesTemp => Convert.ToInt32(gradesTemp));
             int[] r3 = gradingStudents(grades);
+            Console.Write("The converted grades are: ");
             displayArray(r3);
 
             // find the median
             Console.WriteLine("\n\nFind the median");
-            int[] med = { 1, 2, 3, 4, 5, 6 };
-            Console.WriteLine("The median is {0}",median(med));
+            Console.WriteLine("Enter elements of the array (with odd number of elements) separated by single spaces: ");
+            int[] med = Array.ConvertAll(Console.ReadLine().Split(' '), medTemp => Convert.ToInt32(medTemp));
+            Console.WriteLine("The median is {0}",findmedian(med));
             Console.ReadKey();
 
             // closest numbers
             Console.WriteLine("\n\nClosest numbers");
-            Console.WriteLine("Enter size of array");
-            Console.ReadLine();
-            Console.WriteLine("Enter the space separated elements of the array");
-            string[] comps = Console.ReadLine().Split(' ');
-            int[] arr_closest = Array.ConvertAll(comps, int.Parse);
+            Console.WriteLine("Enter the elements of the array separated by single spaces: ");
+            int[] arr_closest = Array.ConvertAll(Console.ReadLine().Split(' '), arr_closestTemp => Convert.ToInt32(arr_closestTemp));
             int[] sortarr = BubbleSort(arr_closest);
-            //ClosestNumbers(sortarr);
+            ClosestNumbers(sortarr);
             Console.ReadLine();
 
 
             // Day of programmer
-            Console.WriteLine("\n\nDay of Programmer\nEnter the year: ");
+            Console.WriteLine("\n\nDay of Programmer\n\nEnter the year: ");
             int year = Int32.Parse(Console.ReadLine());
-            Console.WriteLine(dayOfProgrammer(year));
+            Console.WriteLine("The day of Programmer: {0}",dayOfProgrammer(year));
+            Console.ReadLine();
         }
 
         static void displayArray(int[] arr)
@@ -80,9 +87,10 @@ namespace Assignment2_S19
         }
 
         // rotLeft function
-        static void rotleft(int[] a, int d)
+        static int[] rotleft(int[] a, int d)
         {
             int i, n;
+            int[] a1 = new int[a.Length];
             a = new int[10];
             Console.WriteLine("Enter the size of array");
             string inp = Console.ReadLine(); //input array with size 
@@ -107,13 +115,19 @@ namespace Assignment2_S19
                 rotate(a, n);// calling the rotate function
             }
             Console.Write("Array after {0} rotations: ", d);
-            for (i = 0; i < n; i++)
+            List<int> arraylist = new List<int>();
+            foreach(int k in a)
             {
-                Console.Write(a[i] + " ");
+                if(k!=0)
+                {
+                    arraylist.Add(k);
+                }
             }
+            int[] new_a = arraylist.ToArray();
+            return new_a;
         }// leftrotate
 
-        static void rotate(int[] a, int n)
+        static int[] rotate(int[] a, int n)
         {
             int i, temp;
             temp = a[0];
@@ -122,6 +136,7 @@ namespace Assignment2_S19
                 a[i] = a[i + 1];//formula for putting next element in the first place
             }
             a[i] = temp;
+            return a;
         }//rotate
         //Left Rotate
 
@@ -168,11 +183,10 @@ namespace Assignment2_S19
         }
 
         // balancedSums function
-        static string balancedSums(List<int> arr1)
+        static string balancedSums(int[] arr2)
         {
             try
-            {
-                int[] arr2= arr1.ToArray();
+            { 
                 bool balance_check = false;
                 for (int i = 0; i < arr2.Length; i++)
                 {
@@ -231,15 +245,17 @@ namespace Assignment2_S19
                 {
                     aHist[i - min]++;
                 }
+                List<int> newlist = new List<int>();
                 for (int i = 0; i < 100; i++)//Iterate frequency array and print the number obtained by
                                                //adding current index to minimum value
                 {
                     if (aHist[i] < bHist[i])
                     {
-                        Console.Write("{0} ", i + min);
+                        newlist.Add(i + min);
                     }
                 }
-                Console.ReadLine();
+                int[] newarr = newlist.ToArray();
+                return newarr;
             }
             catch
             {
@@ -307,23 +323,33 @@ namespace Assignment2_S19
 
 
         // findMedian function
-        static float median(int[] a)
+        static int findmedian(int[] a)
         {
-            int[] new_arr = BubbleSort(a);//Sorted array
-            int median_arr;// median of the array
-            if(new_arr.Length%2!=0)// median principle for odd length while taking into consideration that array indexing starts form 0
+            try
             {
-                median_arr = new_arr[(new_arr.Length - 1) / 2];
+                int[] new_arr = BubbleSort(a);//Sorted array
+                int median_arr;// median of the array
+                if (new_arr.Length % 2 != 0)// median principle for odd length while taking into consideration that array indexing starts form 0
+                {
+                    median_arr = new_arr[(new_arr.Length - 1) / 2];
+                }
+                else// throw exception if array length is even
+                {
+                    throw new Exception();
+                }
+                return median_arr;// returns median
             }
-            else// median principle for even length while taking into consideration that array indexing starts from 0
+
+            catch
             {
-                median_arr = new_arr[((new_arr[(new_arr.Length - 2) / 2]) + (new_arr[new_arr.Length / 2])) / 2];
+                Console.WriteLine("Enter an array with odd number of elements.");
             }
-            return median_arr;// returns median
+            return 0;
+            
         }
 
 
-        /*// closestNumbers function
+        // closestNumbers function
         static int[] ClosestNumbers(int[] sortarr)
         {
             try
@@ -357,7 +383,7 @@ namespace Assignment2_S19
             }
             int[] t = new int[0];
             return t;
-        }*/
+        }
 
 
         // Day of the programmer function
