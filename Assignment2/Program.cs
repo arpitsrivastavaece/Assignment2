@@ -44,7 +44,8 @@ namespace Assignment2_S19
             Console.WriteLine("Enter second array separated by single spaces: ");
             int[] brr = Array.ConvertAll(Console.ReadLine().Split(' '), brrTemp => Convert.ToInt32(brrTemp));
             Console.Write("The missing numbers in the first array are: ");
-            missingNumbers(arr, brr);
+            displayArray(missingNumbers(arr, brr));
+            Console.ReadLine();
            
             // grading students
             Console.WriteLine("\n\nGrading students\n");
